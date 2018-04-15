@@ -1,0 +1,2 @@
+# SaveTyme
+SaveTyme is an app that is dedicated towards organizing what needs to be accomplished as a to-do list in the order of top priority to least priority. For each activity completed, a certain number of points are rewarded to the user based on the rank of the priority of the activity. This app will help students manage their time effectively through the use of making a plan and executing it, ultimately reducing their stress and allowing them to practice a healthier lifestyle. 
