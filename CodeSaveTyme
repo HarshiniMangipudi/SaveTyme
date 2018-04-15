@@ -1,0 +1,506 @@
+package hackathonCupertino2.java;
+
+import java.util.ArrayList;
+import java.util.Timer;
+
+import javax.swing.JFrame;    
+import javax.swing.JPanel;
+
+import java.awt.Color;        
+import java.awt.Graphics;
+import java.awt.Font;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.Dimension;
+
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.CardLayout;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.JCheckBox;
+
+import java.awt.event.ActionListener;    
+import java.awt.event.ActionEvent;
+
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+
+public class FirstPanel
+{
+    private CardHolder cHolder;
+    
+    public FirstPanel()
+    {
+        cHolder = new CardHolder();
+    }
+    
+    public static void main(String[] args)
+    {
+        FirstPanel gt = new FirstPanel ();
+        gt.run();
+    }
+
+    public void run()
+    {
+        JFrame frame = new JFrame();
+
+        frame.setSize(1400, 800);                
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLocation(0,0);
+        frame.setResizable(true);
+        frame.add(cHolder);    
+        frame.setVisible(true);        
+    }
+
+    class CardHolder extends JPanel implements ActionListener
+    {
+        private CardLayout cards;
+        private OnePanel onep;
+        private TwoPanel twop;
+        private ThreePanel threep;
+        private FourPanel fourp;
+       // public  ArrayList<String> list;
+        public String w1;
+        public String w2;
+        public String w3;
+        public String w4;
+        public String w5;
+
+
+        public CardHolder ()
+        {
+            /*
+            list = new ArrayList<String>();
+            list.add("hello");
+            list.add("hello");
+            list.add("hello");
+            list.add("hello");
+            list.add("hello");
+            */
+            onep = new OnePanel();
+            twop = new TwoPanel ();
+            threep = new ThreePanel();
+            fourp = new FourPanel();
+
+
+            cards = new CardLayout();
+            
+            onep.startButton.addActionListener(this);
+            twop.goButton.addActionListener(this);
+            threep.doneButton.addActionListener(this);
+
+            setLayout(cards);
+            add(onep, "start");
+            add(twop, "enter");
+            add(threep, "list");
+            add(fourp, "congrats");
+
+        }
+        
+        public void actionPerformed(ActionEvent e)
+        {           
+             String command = e.getActionCommand();
+            if (command.equals("Start"))
+                cards.show(this, "enter");
+            if (command.equals("Submit")) {
+                cards.show(this, "list");
+            }
+            if (command.equals("Done")) {
+                cards.show(this, "congrats");
+            }
+        }
+
+        class OnePanel extends JPanel
+        {
+            private JButton startButton;
+            private Image img;
+            
+            public OnePanel()
+            {
+                    setLayout(null);
+                    startButton = new JButton("Start");
+                    startButton.setSize(250, 125);
+                    startButton.setLocation(500,550);
+                    startButton.setFont(new Font("Serif", Font.PLAIN, 35));
+                    add(startButton);
+            }
+
+                public void paintComponent(Graphics g)
+                {
+                    super.paintComponent(g);
+
+                    setBackground(Color.WHITE);
+
+                    Font welcomeFont = new Font("Serif", Font.BOLD, 200);
+                    g.setFont(welcomeFont);
+                    g.setColor(Color.BLACK);    
+                    g.drawString("Welcome!", 200, 200);
+
+                    Font noteFont = new Font ("Arial", Font.PLAIN, 30);
+                    g.setFont(noteFont);
+                    g.setColor(Color.BLACK);
+                    g.drawString("Hello There!", 525, 275);
+                    g.drawString("Are you stressed?", 490, 325);
+                    g.drawString("Are you a teen?", 505, 375);
+                    g.drawString("Do you have time management problems?", 350, 425);
+                    g.drawString("If you said yes to any of these questions press 'Start'", 280, 475);
+
+                }
+
+            
+        }
+
+        class TwoPanel extends JPanel implements ActionListener
+        {
+            private Timer timer;
+            private Timer timer2;
+            private JButton add;
+            private boolean addPressed;
+          
+            private JTextField textfield1;
+            private JTextField textfield2;
+            private JTextField textfield3;
+            private JTextField textfield4;
+            private JTextField textfield5;
+            
+          
+            private JLabel instructions1;
+            private JLabel instructions2;
+                        
+            private Font font2;
+            private Font font3;
+            private Font font4;
+        
+           // public ArrayList<String> list;
+
+            private JButton goButton;
+
+            public TwoPanel ()
+            {
+                 
+                setLayout(null);
+                setBackground(Color.WHITE);
+                font3 = new Font("Serif", Font.BOLD, 60);
+                
+                font2 = new Font("Serif", Font.BOLD, 40);
+                instructions1 = new JLabel("Enter the top 5 activities that you need to complete.");
+                instructions1.setBounds(200, 100, 1000, 60);
+                instructions1.setFont(font2);
+                instructions1.setForeground(Color.BLACK);
+                add(instructions1);
+                    
+                instructions2 = new JLabel("List them from the top priority to the least");
+                instructions2.setBounds(300, 150, 800, 60 );
+                instructions2.setFont(font2);
+                instructions2.setForeground(Color.BLACK);
+                add(instructions2);
+                    
+                textfield1 = new JTextField(1000);
+                textfield1.setBounds(200, 300, 1000, 50);
+                textfield1.setFont(new Font("Serif", Font.PLAIN, 35));
+                textfield1.addActionListener(this);
+                add(textfield1); 
+
+                textfield2 = new JTextField(1000);
+                textfield2.setBounds(200, 350, 1000, 50);
+                textfield2.setFont(new Font("Serif", Font.PLAIN, 35));
+                textfield2.addActionListener(this);
+                add(textfield2); 
+
+                textfield3 = new JTextField(1000);
+                textfield3.setBounds(200, 400, 1000, 50);
+                textfield3.setFont(new Font("Serif", Font.PLAIN, 35));
+                textfield3.addActionListener(this);
+                add(textfield3); 
+
+                textfield4 = new JTextField(1000);
+                textfield4.setBounds(200, 450, 1000, 50);
+                textfield4.setFont(new Font("Serif", Font.PLAIN, 35));
+                textfield4.addActionListener(this);
+                add(textfield4); 
+
+                textfield5 = new JTextField(1000);
+                textfield5.setBounds(200, 500, 1000, 50);
+                textfield5.setFont(new Font("Serif", Font.PLAIN, 35));
+                textfield5.addActionListener(this);
+                add(textfield5); 
+
+                goButton = new JButton("Submit");
+                goButton.setBounds(600, 600, 200, 125);
+                goButton.setFont(new Font("Serif", Font.PLAIN, 35));
+                goButton.addActionListener(this);
+                add(goButton);
+                    
+                this.setFocusable(true);
+            }
+
+
+            public void paintComponent (Graphics g)
+            {
+                //call super paint Component
+                super.paintComponent(g);
+                //make font,  draw String
+                Font font = new Font("Serif", Font.BOLD, 100);
+                g.setFont(font);
+                g.drawString("To-Do List", 400, 100);
+            }
+
+            public void actionPerformed(ActionEvent e)
+            {
+
+                String textFieldValue1 = textfield1.getText();
+                String textFieldValue2 = textfield2.getText();
+                String textFieldValue3 = textfield3.getText();
+                String textFieldValue4 = textfield4.getText();
+                String textFieldValue5 = textfield5.getText();
+                System.out.println(textFieldValue1);
+              
+                w1 = textFieldValue1;
+                w2 = textFieldValue2;
+                w3 = textFieldValue3;
+                w4 = textFieldValue4;
+                w5 = textFieldValue5;
+                threep.update(w1,w2,w3,w4,w5);
+
+                System.out.println(textFieldValue1+" " + textFieldValue2 + " "+" " + textFieldValue3 + " " + textFieldValue4 + " " +textFieldValue5);
+              
+              
+                // .... do some operation on value ...
+            }
+
+          
+        }
+
+
+        class ThreePanel extends JPanel implements ActionListener
+        {
+            private JButton add;
+            private boolean addPressed;
+          
+            private JCheckBox box1;
+            private JCheckBox box2;
+            private JCheckBox box3;
+            private JCheckBox box4;
+            private JCheckBox box5;
+            
+            private boolean pressed1;
+            private boolean pressed2;
+            private boolean pressed3;
+            private boolean pressed4;
+            private boolean pressed5;
+            private JLabel todo;
+            private JLabel desc;
+            private JLabel desc2;
+            
+            //private JDialogBox end;
+            
+            private Font font2;
+            private Font font3;
+            private Font font4;
+
+            public int score;
+            
+            ArrayList<Integer> boxes;
+
+            private JButton doneButton;
+            
+           
+
+            
+            public ThreePanel ()
+            {
+               
+                 
+                boxes = new ArrayList<Integer>();
+                //list = p.list; 
+                for(int i = 0; i< 5; i++)
+                {
+                    boxes.add(0);
+                }
+                setLayout(null);
+
+                setBackground(Color.WHITE);
+                font3 = new Font("Serif", Font.BOLD, 60);
+                font2 = new Font("Serif", Font.BOLD, 30);
+                todo = new JLabel("Point-Checker:");
+                todo.setBounds(1100, 100, 1000, 60);
+                todo.setFont(font2);
+                todo.setForeground(Color.BLACK);
+                add(todo);
+                
+                desc = new JLabel("The first task is worth 50 pts, the second 40 pts, and so on ...");
+                desc.setBounds(300, 200, 1000, 35);
+                desc.setFont(font2);
+                add(desc);
+
+                desc2 = new JLabel("Try to get as many pts as possible! Remember to check as you complete the tasks.");
+                desc2.setBounds(200, 250, 1200, 60);
+                desc2.setFont(font2);
+                add(desc2);
+
+                doneButton = new JButton("Done");
+                doneButton.setBounds(600, 600, 200, 125);
+                doneButton.setFont(new Font("Serif", Font.PLAIN, 35));
+                add(doneButton);
+
+                this.setFocusable(true);
+
+                score = 0;
+            }
+
+            public void update(String w1, String w2, String w3, String w4, String w5) {
+                System.out.println("Updating");
+                System.out.println("S" + " " + w1 + " " + w2 + " " + w3 + " " + w4 + " " + w5);
+                 box1 = new JCheckBox(w1);
+                box1.setBounds(200, 300, 1000, 50);
+                box1.setFont(new Font("Serif", Font.PLAIN, 35));
+                box1.addActionListener(this);
+                add(box1); 
+                box2 = new JCheckBox(w2);
+                box2.setBounds(200, 350, 1000, 50);
+                box2.setFont(new Font("Serif", Font.PLAIN, 35));
+                box2.addActionListener(this);
+                add(box2); 
+                box3 = new JCheckBox(w3);
+                box3.setBounds(200, 400, 1000, 50);
+                box3.setFont(new Font("Serif", Font.PLAIN, 35));
+                box3.addActionListener(this);
+                add(box3); 
+                box4 = new JCheckBox(w4);
+                box4.setBounds(200, 450, 1000, 50);
+                box4.setFont(new Font("Serif", Font.PLAIN, 35));
+                box4.addActionListener(this);
+                add(box4); 
+                box5 = new JCheckBox(w5);
+                box5.setBounds(200, 500, 1000, 50);
+                box5.setFont(new Font("Serif", Font.PLAIN, 35));
+                box5.addActionListener(this);
+                add(box5); 
+            }
+
+            public void paintComponent (Graphics g)
+            {
+                super.paintComponent(g);
+                setBackground(Color.WHITE);
+                Font font = new Font("Serif", Font.BOLD, 100);
+                g.setFont(font);
+                g.drawString("Your to-do list!", 400, 100);
+
+                Font theFont = new Font("Serif", Font.BOLD, 30);
+                g.setFont(theFont);
+                g.drawString(new Integer(score).toString(), 1180, 175);
+                
+            }
+
+            public void actionPerformed(ActionEvent e)
+            {
+                for(int i =0; i < 5; i++)
+                {
+                    if(i == 0 && boxes.get(i) == 1)
+                    {
+                        score-=50;
+                    }
+                    if(i == 1 && boxes.get(i) == 1)
+                    {
+                        score-=40;
+                    }
+                    if(i == 2 && boxes.get(i) == 1)
+                    {
+                        score-=30;
+                    }
+                    if(i == 3 && boxes.get(i) == 1)
+                    {
+                        score-=20;
+                    }
+                    if(i == 4 && boxes.get(i) == 1)
+                    {
+                        score-=10;
+                    }
+                }
+
+                pressed1 = box1.isSelected();
+                pressed2 = box2.isSelected();
+                pressed3 = box3.isSelected();
+                pressed4 = box4.isSelected();
+                pressed5 = box5.isSelected();
+
+                if (pressed1) 
+                {
+                    boxes.set(0, 1);
+                    score += 50;
+                }
+
+                if (pressed2) 
+                {
+                    boxes.set(1, 1);
+                    score+=40;
+                }
+
+                if (pressed3) 
+                {
+                    boxes.set(2, 1);
+                    score+=30;
+                }
+                if (pressed4) 
+                {
+                    boxes.set(3, 1);
+                    score += 20;
+                }
+                if (pressed5) 
+                {
+                    boxes.set(4, 1);
+                    score += 10; 
+                }
+                System.out.println(score);
+                fourp.updateScore(score);
+                repaint();
+            }
+
+        }
+
+        class FourPanel extends JPanel
+        {
+           
+            private int actualScore;
+        	public FourPanel ()
+        	{
+                
+                actualScore = 0;
+
+        	}
+
+        	public void paintComponent(Graphics g)
+        	{
+        		super.paintComponent(g);
+                setBackground(Color.WHITE);
+
+        		g.setColor(Color.BLACK);
+        		Font congFont = new Font("Serif", Font.BOLD, 100);
+        		g.setFont(congFont);
+        		g.drawString("Congrats! You're Done!", 150, 100);
+
+        		Font pointFont = new Font("Arial", Font.PLAIN, 75);
+        		g.setFont(pointFont);
+        		g.drawString("You have accumulated", 300, 300);
+        		g.drawString(new Integer(actualScore).toString(), 650, 400);
+        		g.drawString("amount of points!", 400, 500);
+        	}
+
+            public void updateScore (int score)
+            {
+                actualScore = score; 
+
+            }
+        }
+    }
+}
+
+
